@@ -1,0 +1,10 @@
+﻿  main.cpp
+  ProcessSchedule.cpp
+c:\users\dell\source\repos\schedule\schedule\processschedule.cpp(102): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\dell\source\repos\schedule\schedule\processschedule.cpp(105): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\dell\source\repos\schedule\schedule\processschedule.cpp(149): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\dell\source\repos\schedule\schedule\processschedule.cpp(152): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\dell\source\repos\schedule\schedule\processschedule.cpp(212): warning C4018: “<”: 有符号/无符号不匹配
+c:\users\dell\source\repos\schedule\schedule\processschedule.cpp(215): warning C4018: “<”: 有符号/无符号不匹配
+  正在生成代码...
+  Schedule.vcxproj -> C:\Users\DELL\source\repos\Schedule\Debug\Schedule.exe

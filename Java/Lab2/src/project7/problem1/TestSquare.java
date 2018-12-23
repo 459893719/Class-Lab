@@ -1,9 +1,19 @@
 package project7.problem1;
 
+import project6.GeometricObject;
+import project6.Triangle;
+
+/**
+ * 
+* @ClassName: TestSquare
+* @Description: 对Square类进行测试
+* @author Orion
+* @date 2018年12月21日
+*
+ */
 public class TestSquare {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		GeometricObject[] geoArray = {new Square(), new Square(), new Square(),
 				new Triangle(), new Triangle()};
 		

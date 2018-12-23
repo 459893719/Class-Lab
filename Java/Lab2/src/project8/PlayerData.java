@@ -1,10 +1,18 @@
 package project8;
 
+/**
+ * 
+* @ClassName: PlayerData
+* @Description: 存放线程A,B独有的一些数据
+* @author Orion
+* @date 2018年12月23日
+*
+ */
 public class PlayerData {
-	private boolean isReady;
-	private char result;
-	private int sleepTime;
-	private int totalPoints;
+	private boolean isReady;  //是否已经结束本回合, 方便线程同步
+	private char result;      //产生的字母
+	private int sleepTime;    //本次睡眠时间
+	private int totalPoints;  //线程的总得分
 	
 	public PlayerData() {
 		isReady = false;

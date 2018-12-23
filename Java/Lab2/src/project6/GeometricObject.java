@@ -1,10 +1,19 @@
 package project6;
 
+/**
+ * 
+* @ClassName: GeometricObject
+* @Description: 图形的抽象类
+* @author Orion
+* @date 2018年12月21日
+*
+ */
 public abstract class GeometricObject {
-	  private String color;
-	  private boolean filled;
+	  private String color;      //图形的颜色, 用String表示
+	  private boolean filled;    //图形是否填充
 	  
 	  protected GeometricObject() {
+		//默认颜色为白色
 	    color = "white";
 	  }
 
@@ -34,7 +43,9 @@ public abstract class GeometricObject {
 	      " and filled: " + filled;
 	  }
 
+	  //获得图形的面积
 	  public abstract double getArea();
 
+	  //获得图形的周长
 	  public abstract double getPerimeter();
 }

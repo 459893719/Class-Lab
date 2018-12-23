@@ -1,5 +1,15 @@
 package project7.problem2;
 
+import project6.GeometricObject;
+
+/**
+ * 
+* @ClassName: Octagon
+* @Description: 正八边形的抽象
+* @author Orion
+* @date 2018年12月21日
+*
+ */
 public class Octagon extends GeometricObject implements Cloneable, Comparable<Octagon>{
 
 	private double side;
@@ -43,7 +53,9 @@ public class Octagon extends GeometricObject implements Cloneable, Comparable<Oc
 	}
 	
 	public Object clone() throws CloneNotSupportedException {
-		return super.clone();
+		Octagon octagon = (Octagon)super.clone();
+		octagon.setColor(new String(getColor()));
+		return octagon;
 	}
 
 }

@@ -5,11 +5,19 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * 
+* @ClassName: ThreadC
+* @Description: 线程C, 进行结果的判定及结果的打印
+* @author Orion
+* @date 2018年12月23日
+*
+ */
 public class ThreadC implements Runnable{
 	
-	private SharingData sharingdata;
-	private PlayerData PlayerA, PlayerB;
-	private ObservableList<Round> data;
+	private SharingData sharingdata;      //线程间的共享数据
+	private PlayerData PlayerA, PlayerB;  //线程A, B的数据
+	private ObservableList<Round> data;   //表格的数据
 	
 	public ThreadC(SharingData sharingData, PlayerData PlayerA, PlayerData PlayerB, ObservableList<Round> data) {
 		this.sharingdata = sharingData;
@@ -23,6 +31,7 @@ public class ThreadC implements Runnable{
 		// TODO Auto-generated method stub
 		try {
 			for(int i=1;i<=sharingdata.totalRound;i++) {
+				//round值是共享变量, 因此要保证互斥访问
 				synchronized (sharingdata.lock) {
 					//更新Round值
 					sharingdata.round = i;
@@ -31,6 +40,7 @@ public class ThreadC implements Runnable{
 					
 				}
 				
+				//打印结果这一过程是互斥的, 其他两个线程不能访问
 				synchronized (sharingdata.lock) {
 					
 					//等待线程A和线程B都已经结束回合
@@ -62,6 +72,7 @@ public class ThreadC implements Runnable{
 							String.valueOf(PlayerB.getResult()), 
 							String.valueOf(pointb)));
 					
+					//开启下一回合, 初始化线程的信号量
 					PlayerA.setReady(false);
 					PlayerB.setReady(false);
 					
@@ -69,6 +80,7 @@ public class ThreadC implements Runnable{
 				}
 				
 			}
+			//所有回合已经结束, 打印最后的结果
 			Platform.runLater(() -> {
 				
 				Alert resultDialog = new Alert(AlertType.INFORMATION);
@@ -90,8 +102,6 @@ public class ThreadC implements Runnable{
 			});
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 

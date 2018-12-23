@@ -2,6 +2,14 @@ package project8;
 
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * 
+* @ClassName: Round
+* @Description: 存放UI的表格中的表项数据
+* @author Orion
+* @date 2018年12月23日
+*
+ */
 public class Round {
 	private final SimpleStringProperty roundNum;
 	private final SimpleStringProperty ASleepTime;

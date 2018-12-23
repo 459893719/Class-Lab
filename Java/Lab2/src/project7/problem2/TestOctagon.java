@@ -1,5 +1,14 @@
 package project7.problem2;
 
+
+/**
+ * 
+* @ClassName: TestOctagon
+* @Description: Octagon类的测试
+* @author Orion
+* @date 2018年12月21日
+*
+ */
 public class TestOctagon {
 
 	public static void main(String[] args) {

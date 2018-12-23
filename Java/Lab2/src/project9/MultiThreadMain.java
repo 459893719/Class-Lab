@@ -19,11 +19,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-//类似于结构体, 将多线程之间共享的数据封装起来, 便于相互传递
+/**
+ * 
+* @ClassName: SharingData
+* @Description: 类似于结构体, 将多线程之间共享的数据封装起来, 便于相互传递
+* @author Orion
+* @date 2018年12月22日
+*
+ */
 class SharingData{
-	public int totalRound;
-	public int round;
-	public Lock lock;
+	public int totalRound;   //本次程序总回合数
+	public int round;        //现在进行的回合
+	public Lock lock;        //互斥锁, 服务端程序中所有线程共享一个锁
 	public SharingData() {
 		// TODO Auto-generated constructor stub
 		totalRound = 9;
@@ -32,18 +39,28 @@ class SharingData{
 	}
 }
 
+/**
+ * 
+* @ClassName: MultiThreadMain
+* @Description: 在类中进行UI界面设计
+* @author Orion
+* @date 2018年12月22日
+*
+ */
 public class MultiThreadMain extends Application{
-	SharingData sharingdata = new SharingData();
+	SharingData sharingdata = new SharingData();   //所有线程共享的数据
+	//线程A,B各自持有的数据
 	private PlayerData PlayerA = new PlayerData(), PlayerB = new PlayerData();
 	
+	//显示表格所需的变量
 	private final TableView<Round> table = new TableView<Round>();
 	private final ObservableList<Round> data = FXCollections.observableArrayList();
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
 		
+		//产生有输入框的对话框
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("比大小程序");
 		dialog.setContentText("本局比赛共有几个回合(不小于3)?");
@@ -71,6 +88,7 @@ public class MultiThreadMain extends Application{
 			Label title = new Label("线上猜拳");
 			title.setFont(new Font("微软雅黑", 40));
 			
+			//下面设置表格的相关属性
 			table.setEditable(false);
 			TableColumn roundCol = new TableColumn("Round");
 			roundCol.setCellValueFactory(new PropertyValueFactory<>("roundNum"));
@@ -113,6 +131,7 @@ public class MultiThreadMain extends Application{
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 				
+	        //启动三个线程
 			new Thread(new Server(sharingdata, PlayerA, PlayerB, data)).start();
 			new Thread(new TCPHandler(sharingdata, PlayerA)).start();
 			new Thread(new UDPHandler(sharingdata, PlayerB)).start();

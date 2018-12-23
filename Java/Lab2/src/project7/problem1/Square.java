@@ -1,5 +1,15 @@
 package project7.problem1;
 
+import project6.GeometricObject;
+
+/**
+ * 
+* @ClassName: Square
+* @Description: 正方形的抽象
+* @author Orion
+* @date 2018年12月21日
+*
+ */
 public class Square extends GeometricObject implements Colorable {
 	private double side;
 	

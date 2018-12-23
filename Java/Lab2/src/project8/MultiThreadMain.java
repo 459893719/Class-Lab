@@ -1,19 +1,15 @@
 package project8;
 
 import java.util.Optional;
-import java.util.Random;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,11 +19,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-//类似于结构体, 将多线程之间共享的数据封装起来, 便于相互传递
+/**
+ * 
+* @ClassName: SharingData
+* @Description: 类似于结构体, 将多线程之间共享的数据封装起来, 便于相互传递
+* @author Orion
+* @date 2018年12月22日
+*
+ */
 class SharingData{
-	public int totalRound;
-	public int round;
-	public Lock lock;
+	public int totalRound;      //本次程序总回合数
+	public int round;           //现在进行的回合
+	public Lock lock;           //互斥锁, 程序中所有线程共享一个锁
 	public SharingData() {
 		// TODO Auto-generated constructor stub
 		round = 0;
@@ -35,10 +38,20 @@ class SharingData{
 	}
 }
 
+/**
+ * 
+* @ClassName: MultiThreadMain
+* @Description: 在类中进行UI界面设计
+* @author Orion
+* @date 2018年12月22日
+*
+ */
 public class MultiThreadMain extends Application{
-	SharingData sharingdata = new SharingData();
-	private PlayerData PlayerA = new PlayerData(), PlayerB = new PlayerData();
+	SharingData sharingdata = new SharingData();   //所有线程共享的数据
+	//线程A,B各自持有的数据
+	private PlayerData PlayerA = new PlayerData(), PlayerB = new PlayerData();  
 	
+	//显示表格所需的变量
 	private final TableView<Round> table = new TableView<Round>();
 	private final ObservableList<Round> data = FXCollections.observableArrayList();
 	
@@ -47,6 +60,7 @@ public class MultiThreadMain extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
 		
+		//产生有输入框的对话框
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("比大小程序");
 		dialog.setContentText("本局比赛共有几个回合(不小于3)?");
@@ -74,6 +88,7 @@ public class MultiThreadMain extends Application{
 			Label title = new Label("线程比大小");
 			title.setFont(new Font("微软雅黑", 40));
 			
+			//下面设置表格的相关属性
 			table.setEditable(false);
 			TableColumn roundCol = new TableColumn("Round");
 			roundCol.setCellValueFactory(new PropertyValueFactory<>("roundNum"));
@@ -116,6 +131,7 @@ public class MultiThreadMain extends Application{
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	        
+	        //启动三个线程
 	        Thread threadC = new Thread(new ThreadC(sharingdata, PlayerA, PlayerB, data));
 			threadC.start();
 			
